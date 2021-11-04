@@ -1,0 +1,44 @@
+---
+title: "Preliminary Code For Final Project"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+library(tidyverse)
+library(GGally)
+library(dplyr)
+library(ggmap)
+```
+
+```{r}
+data = read_csv("/Users/jaeminlee/Desktop/hate_crimes.csv")
+data <- data %>% mutate(region = case_when(data$state %in% c("Washington", "Oregon", "California", "Alaska", "Hawaii", "Nevada", "Utah", "Idaho", "Colorado", "Wyoming", "Montana") ~ "West", data$state %in% c("Arizona", "New Mexico", "Texas", "Oklahoma") ~ "Southwest", 
+                                           data$state %in% c("North Dakota", "South Dakota", "Nebraska", "Kansas", "Minnesota", "Iowa", "Missouri", "Wisconsin", "Illinois", "Indiana", "Michigan", "Ohio") ~ "Middle West", data$state %in% c("Arkansas", "Louisiana", "Mississippi", "Alabama", "Kentucky", "Tennessee", "Virginia", "West Virginia", "North Carolina", "South Carolina", "Georgia", "Florida") ~ "Southeast", data$state %in% c("Pennsylvania", "New York", "Vermont", "New Hampshire", "Maine", "Massachusetts", "Rhode Island", "Connecticut", "New Jersey", "Delaware", "Maryland", "District of Columbia") ~ "Northeast"))
+```
+
+```{r}
+ggplot(data, aes(x = median_household_income, y = hate_crimes_per_100k_splc)) + geom_point(aes(color = region)) + geom_smooth(method = "lm", SE = TRUE) + labs(x = "Median Household Income", y = "Hate Crimes Per 100k SPLC", title = "Linear Regression of Median Household Income and Hate Crimes Per 100k SPLC")
+linReg = lm(hate_crimes_per_100k_splc ~ median_household_income , data = data)
+summary(linReg)
+```
+
+```{r}
+data.subset = subset(data, select = c(state, median_household_income, share_unemployed_seasonal, share_voters_voted_trump, hate_crimes_per_100k_splc, avg_hatecrimes_per_100k_fbi, region))
+ggpairs(data.subset, columns = 2:5)
+```
+
+
+```{r}
+data
+ggplot(data, aes(x = share_unemployed_seasonal, y = hate_crimes_per_100k_splc)) + stat_density2d(aes(fill = ..density..), geom = "tile", contour = F) + geom_point(aes(color = region)) + scale_fill_gradient(low = "white", high = "red") + labs(x = "Shared Unemplyed Seasonal", y = "Hate Crimes Per 100k SPLC", title = "Heat Map of Shared Seasonal Unemployment and Hate Crimes Per 100k SPLC")
+```
