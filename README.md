@@ -1,6 +1,7 @@
 # Data Visualization Final Project
 
-## 05-499 Final Project Article Draft\ By: Ellen Kahng, Jaemin Lee, Iris Miao, Darren Mok
+## 05-499 Final Project Article Draft
+By: Ellen Kahng, Jaemin Lee, Iris Miao, Darren Mok
 
 
 Hate crimes, or crimes motivated by a negative bias against an individual’s identity such as race, religion, sexual orientation, etc., have become an unfortunate presence in our society. In the year 2016, in the 10 days after the presidential election, an influx of hate crimes were reported to the Southern Poverty Law Center.
